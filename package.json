@@ -8,7 +8,8 @@
     "start": "react-native start",
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx,.js,.jsx --fix",
-    "prettier": "prettier --write \"{src,src/*,.}/*.{ts,tsx,js,jsx}\""
+    "prettier": "prettier --write \"{src,src/*,.}/*.{ts,tsx,js,jsx}\"",
+    "clean": "watchman watch-del-all && rm -rf $TMPDIR/react-native-packager-cache-* && rm -rf $TMPDIR/metro-bundler-cache-* && rm -rf node_modules/ && yarn cache clean && yarn"
   },
   "dependencies": {
     "@react-native-community/masked-view": "^0.1.7",
