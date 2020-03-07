@@ -16,6 +16,7 @@
     "@react-native-mapbox-gl/maps": "^7.2.0",
     "@react-navigation/bottom-tabs": "^5.1.1",
     "@react-navigation/native": "^5.0.9",
+    "@types/": "react-native-mapbox-gl/maps",
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",
     "react": "16.9.0",

@@ -1079,6 +1079,16 @@
   dependencies:
     "@turf/helpers" "6.x"
 
+"@types/@react-native-mapbox-gl/maps":
+  version "7.2.0"
+  resolved "https://codeload.github.com/react-native-mapbox-gl/maps/tar.gz/11874cd9b2117f1927ea7d10b6355b014188f8e1"
+  dependencies:
+    "@mapbox/geo-viewport" ">= 0.4.0"
+    "@turf/along" ">= 4.0.0 <7.0.0"
+    "@turf/distance" ">= 4.0.0 <7.0.0"
+    "@turf/helpers" ">= 4.6.0 <7.0.0"
+    underscore "^1.8.3"
+
 "@types/babel__core@^7.1.0":
   version "7.1.6"
   resolved "https://registry.yarnpkg.com/@types/babel__core/-/babel__core-7.1.6.tgz#16ff42a5ae203c9af1c6e190ed1f30f83207b610"
