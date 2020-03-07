@@ -48,7 +48,7 @@ export default function App() {
   }, [initializing]);
 
   useEffect(() => {
-    if (user) {
+    if (user && user.uid) {
       return firestore()
         .collection('users')
         .onSnapshot(querySnapshot => {
