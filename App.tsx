@@ -27,6 +27,8 @@ GoogleSignin.configure({
     '146330306217-s8vpfhe1ne2hibh2a8hoqva73ll43l6f.apps.googleusercontent.com', //
 });
 
+export const UserContext = React.createContext(null);
+
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -68,34 +70,35 @@ export default function App() {
       </View>
     );
   }
-
   return (
-    <NavigationContainer>
-      <Tab.Navigator
-        screenOptions={({route}) => ({
-          tabBarIcon: ({focused, color, size}) => {
-            let iconName;
+    <UserContext.Provider value={user}>
+      <NavigationContainer>
+        <Tab.Navigator
+          screenOptions={({route}) => ({
+            tabBarIcon: ({focused, color, size}) => {
+              let iconName;
 
-            if (route.name === 'Map') {
-              iconName = focused ? 'map' : 'map-outline';
-            } else if (route.name === 'Profile') {
-              iconName = focused ? 'account-circle' : 'account-circle-outline';
-            } else if (route.name === 'Community') {
-              iconName = focused ? 'account-group' : 'account-group-outline';
-            }
+              if (route.name === 'Map') {
+                iconName = focused ? 'map' : 'map-outline';
+              } else if (route.name === 'Profile') {
+                iconName = focused ? 'account-circle' : 'account-circle-outline';
+              } else if (route.name === 'Community') {
+                iconName = focused ? 'account-group' : 'account-group-outline';
+              }
 
-            // You can return any component that you like here!
-            return <Icon name={iconName} size={size} color={color} />;
-          },
-        })}
-        tabBarOptions={{
-          activeTintColor: 'tomato',
-          inactiveTintColor: 'gray',
-        }}>
-        <Tab.Screen name="Map" component={Map} />
-        <Tab.Screen name="Profile" component={Profile} />
-        <Tab.Screen name="Community" component={Community} />
-      </Tab.Navigator>
-    </NavigationContainer>
+              // You can return any component that you like here!
+              return <Icon name={iconName} size={size} color={color} />;
+            },
+          })}
+          tabBarOptions={{
+            activeTintColor: 'tomato',
+            inactiveTintColor: 'gray',
+          }}>
+          <Tab.Screen name="Map" component={Map} />
+          <Tab.Screen name="Profile" component={Profile} />
+          <Tab.Screen name="Community" component={Community} />
+        </Tab.Navigator>
+      </NavigationContainer>
+    </UserContext.Provider>
   );
 }
