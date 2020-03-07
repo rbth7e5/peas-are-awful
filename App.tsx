@@ -81,7 +81,9 @@ export default function App() {
               if (route.name === 'Map') {
                 iconName = focused ? 'map' : 'map-outline';
               } else if (route.name === 'Profile') {
-                iconName = focused ? 'account-circle' : 'account-circle-outline';
+                iconName = focused
+                  ? 'account-circle'
+                  : 'account-circle-outline';
               } else if (route.name === 'Community') {
                 iconName = focused ? 'account-group' : 'account-group-outline';
               }
