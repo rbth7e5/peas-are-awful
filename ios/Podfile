@@ -13,6 +13,7 @@ pre_install do |installer|
     'RNFBApp',
     'RNFBAuth',
     'RNFBMessaging',
+    'RNFBFirestore',
   ]
   installer.pod_targets.each do |pod|
     if $static_frameworks.include?(pod.name)

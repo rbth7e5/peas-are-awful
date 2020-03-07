@@ -14,8 +14,9 @@ import Map from './src/Map';
 import Profile from './src/Profile';
 import Community from './src/Community';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {View, Text} from 'react-native';
+import {Text, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
+import firestore from '@react-native-firebase/firestore';
 import {STYLES} from './src/styles';
 import {
   GoogleSignin,
@@ -33,7 +34,7 @@ const Tab = createBottomTabNavigator();
 
 export default function App() {
   const [initializing, setInitializing] = useState(true);
-  const [user, setUser] = useState();
+  const [user, setUser] = useState(null);
 
   useEffect(() => {
     // Handle user state changes
@@ -43,14 +44,38 @@ export default function App() {
         setInitializing(false);
       }
     }
-    const subscriber = auth().onAuthStateChanged(onAuthStateChanged);
-    return subscriber; // unsubscribe on unmount
+    return auth().onAuthStateChanged(onAuthStateChanged); // unsubscribe on unmount
   }, [initializing]);
+
+  useEffect(() => {
+    if (user) {
+      return firestore()
+        .collection('users')
+        .onSnapshot(querySnapshot => {
+          const retrievedUserArray = querySnapshot.docs.filter(
+            d => d.id === user.uid,
+          );
+          if (retrievedUserArray.length > 0) {
+            const data = retrievedUserArray[0]
+              ? retrievedUserArray[0].data()
+              : {};
+            setUser({
+              ...user,
+              ...data,
+            });
+          } else {
+            return firestore()
+              .collection('users')
+              .doc(user.uid)
+              .set({data: {borrow: 0, donate: 0, holding: 0}});
+          }
+        });
+    }
+  }, [user, initializing]);
 
   if (initializing) {
     return null;
   }
-
   if (!user) {
     return (
       <View style={STYLES.loginView}>
