@@ -6,4 +6,11 @@ export const STYLES = StyleSheet.create({
     height: '100%',
     width: '100%',
   },
+  loginView: {
+    flex: 1,
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
