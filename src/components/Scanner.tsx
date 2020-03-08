@@ -1,6 +1,6 @@
 import QRCodeScanner from 'react-native-qrcode-scanner';
 import * as React from 'react';
-import {Button} from 'react-native';
+import {Button, Text} from 'react-native';
 
 interface ScannerProps {
   open: boolean;
@@ -13,7 +13,10 @@ export default function Scanner(props: ScannerProps) {
     return (
       <QRCodeScanner
         onRead={e => onScan(e.data)}
-        topContent={<Button title="Close" onPress={onClose} />}
+        topViewStyle={{backgroundColor: 'white'}}
+        bottomViewStyle={{backgroundColor: 'white'}}
+        topContent={<Text>Scan the QR Code on the Kiosk!</Text>}
+        bottomContent={<Button title="Close" onPress={onClose} />}
       />
     );
   }

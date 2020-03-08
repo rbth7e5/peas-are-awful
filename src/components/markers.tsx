@@ -5,7 +5,7 @@ import {FeatureCollection} from 'geojson';
 import {MARKER_STYLES} from '../styles';
 
 interface KioskMarkerProps {
-  onTap: (data: any) => any;
+  onTap: (id: string) => any;
 }
 
 export const KioskMarker = (props: KioskMarkerProps) => {
@@ -15,10 +15,15 @@ export const KioskMarker = (props: KioskMarkerProps) => {
     return firestore()
       .collection('kiosks')
       .onSnapshot(querySnapshot => {
-        const docData = querySnapshot.docs.map(doc => doc.data());
+        const docData = querySnapshot.docs.map(doc => {
+          return {
+            id: doc.id,
+            ...doc.data(),
+          };
+        });
         setKiosks(docData);
       });
-  }, [kiosks]);
+  });
   const featureCollection = {
     type: 'FeatureCollection',
     features: kiosks.map(k => {
@@ -37,7 +42,7 @@ export const KioskMarker = (props: KioskMarkerProps) => {
       id="symbolLocationSource"
       hitbox={{width: 5, height: 5}}
       shape={featureCollection}
-      onPress={e => onTap(e.nativeEvent.payload.properties)}>
+      onPress={e => onTap(e.nativeEvent.payload.properties.id)}>
       <MapboxGL.SymbolLayer
         id="symbolLocationSymbols"
         minZoomLevel={1}
