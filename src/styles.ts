@@ -85,3 +85,12 @@ export const MARKER_STYLES: {
     iconOffset: [0, -200],
   },
 };
+
+export const LAYER_STYLES: {[name: string]: StyleProp<LineLayerStyle>} = {
+  routeMarker: {
+    lineCap: 'round',
+    lineColor: '#fc8753',
+    lineWidth: ['interpolate', ['linear'], ['zoom'], 12, 2, 15, 4, 22, 18],
+    visibility: 'visible',
+  },
+};

@@ -2,7 +2,7 @@ import React, {useContext, useState} from 'react';
 import MapboxGL from '@react-native-mapbox-gl/maps';
 import {STYLES} from './styles';
 import {MAPBOX_TOKEN} from '../private';
-import {KioskMarker} from './components/markers';
+import {KioskMarker, RouteMarker} from './components/markers';
 import Panel from './components/Panel';
 import Scanner from './components/Scanner';
 import {Alert} from 'react-native';
@@ -16,6 +16,8 @@ export default function Map() {
   const [panelOpen, setPanelOpen] = useState(false);
   const [scannerOpen, setScannerOpen] = useState(false);
   const [kioskID, setKioskID] = useState(null);
+  const [route, setRoute] = useState(null);
+  const [currentLoc, setCurrentLoc] = useState(null);
   const kioskData = useKioskData(kioskID);
   const user = useContext(UserContext);
 
@@ -79,24 +81,39 @@ export default function Map() {
     <>
       <MapboxGL.MapView
         style={STYLES.mapView}
-        onPress={() => setPanelOpen(false)}>
+        onPress={() => {
+          setPanelOpen(false);
+          setRoute(null);
+        }}>
         <MapboxGL.Camera followUserLocation={true} animationDuration={100} />
-        <MapboxGL.UserLocation visible={true} />
+        <MapboxGL.UserLocation
+          visible={true}
+          onUpdate={loc => setCurrentLoc(loc)}
+        />
         <KioskMarker
           onTap={id => {
             setPanelOpen(true);
             setKioskID(id);
           }}
         />
+        <RouteMarker route={route} />
       </MapboxGL.MapView>
-      <Panel
-        panelOpen={panelOpen}
-        kioskID={kioskID}
-        onScan={() => {
-          setPanelOpen(false);
-          setScannerOpen(true);
-        }}
-      />
+      {kioskData && (
+        <Panel
+          panelOpen={panelOpen}
+          kioskID={kioskID}
+          onScan={() => {
+            setPanelOpen(false);
+            setScannerOpen(true);
+          }}
+          kioskLoc={[
+            kioskData.location._longitude,
+            kioskData.location._latitude,
+          ]}
+          origin={currentLoc}
+          onGetDirection={r => setRoute(r)}
+        />
+      )}
       {scannerOpen && (
         <Scanner
           onClose={() => setScannerOpen(false)}

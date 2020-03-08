@@ -2,15 +2,20 @@ import {useKioskData, useSlideUpAnimation} from '../custom-hooks';
 import {STYLES} from '../styles';
 import {Animated, View, Text, TouchableOpacity} from 'react-native';
 import React from 'react';
+import GeoJSON from 'geojson';
+import {getDirections} from '../mapbox-api';
 
 interface PanelProps {
   panelOpen: boolean;
   kioskID: string;
+  kioskLoc: any;
   onScan: () => any;
+  origin: any;
+  onGetDirection: (r: GeoJSON.LineString) => any;
 }
 
 export default function Panel(props: PanelProps) {
-  const {panelOpen, kioskID, onScan} = props;
+  const {panelOpen, kioskID, onScan, kioskLoc, origin, onGetDirection} = props;
   const slideUp = useSlideUpAnimation(panelOpen, 300, [320, 0]);
   const data = useKioskData(kioskID);
   if (data) {
@@ -26,7 +31,14 @@ export default function Panel(props: PanelProps) {
             <View style={[STYLES.panelProgress, {width: `${ratio * 100}%`}]} />
           </View>
           <View style={STYLES.panelButtons}>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={async () => {
+                const response = await getDirections(
+                  [origin.coords.longitude, origin.coords.latitude],
+                  kioskLoc,
+                );
+                onGetDirection(response.routes[0].geometry);
+              }}>
               <View style={STYLES.panelButton}>
                 <Text style={STYLES.panelButtonText}>Get Directions</Text>
               </View>

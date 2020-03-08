@@ -20,6 +20,9 @@ export default function Community() {
         selectedIndex={selectedIndex}
         onPress={setSelectedIndex}
         buttons={buttonNames}
+        selectedButtonStyle={{backgroundColor: '#a6e3ca'}}
+        selectedTextStyle={{color: '#0d3d3b'}}
+        textStyle={{color: '#0d3d3b'}}
       />
       <FlatList
         keyExtractor={(item, index) => index.toString()}

@@ -2,7 +2,7 @@ import MapboxGL from '@react-native-mapbox-gl/maps';
 import firestore from '@react-native-firebase/firestore';
 import React, {useEffect, useState} from 'react';
 import {FeatureCollection} from 'geojson';
-import {MARKER_STYLES} from '../styles';
+import {LAYER_STYLES, MARKER_STYLES} from '../styles';
 
 interface KioskMarkerProps {
   onTap: (id: string) => any;
@@ -47,6 +47,24 @@ export const KioskMarker = (props: KioskMarkerProps) => {
         id="symbolLocationSymbols"
         minZoomLevel={1}
         style={MARKER_STYLES.kioskIcon}
+      />
+    </MapboxGL.ShapeSource>
+  );
+};
+
+interface RouteMarkerProps {
+  route: any;
+}
+export const RouteMarker = (props: RouteMarkerProps) => {
+  const {route} = props;
+  if (!route) {
+    return null;
+  }
+  return (
+    <MapboxGL.ShapeSource id="renderRouteMarkerSource" shape={route}>
+      <MapboxGL.LineLayer
+        id="renderRouteMarkerSymbol"
+        style={LAYER_STYLES.routeMarker}
       />
     </MapboxGL.ShapeSource>
   );
