@@ -23,7 +23,12 @@ export default function Map() {
         .collection('kiosks')
         .doc(kioskID)
         .set({bags_avail: kioskData.bags_avail + value}, {merge: true});
-      setPanelOpen(true);
+      const currentHook =
+        value === 1 ? kioskData.bags_avail + 1 : kioskData.bags_avail;
+      const action = value === 1 ? 'Hook up' : 'Retrieve';
+      Alert.alert(`Hook ${currentHook}`, `${action} your bag now`, [
+        {text: 'Done', onPress: () => setPanelOpen(true)},
+      ]);
     }
   };
   return (
