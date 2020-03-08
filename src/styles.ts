@@ -59,15 +59,19 @@ export const STYLES = StyleSheet.create({
     marginTop: 'auto',
   },
   panelButton: {
-    backgroundColor: 'red',
+    backgroundColor: '#0d3d3b',
     borderRadius: 8,
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 8,
+    paddingLeft: 20,
+    paddingRight: 20,
+    paddingTop: 8,
+    paddingBottom: 8,
   },
   panelButtonText: {
     fontSize: 16,
+    color: 'white',
   },
 });
 
