@@ -60,7 +60,7 @@ export default function App() {
               ? retrievedUserArray[0].data()
               : {};
             setUser({
-              ...user,
+              uid: user.uid,
               ...data,
             });
           } else {
@@ -71,7 +71,7 @@ export default function App() {
           }
         });
     }
-  }, [user, initializing]);
+  }, [user]);
 
   if (initializing) {
     return null;
