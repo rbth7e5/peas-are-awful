@@ -66,6 +66,19 @@ export default function App() {
             setUser({
               ...data,
             });
+            await firestore()
+              .collection('users')
+              .doc(user.uid)
+              .set(
+                {
+                  ...data,
+                  uid: user.uid,
+                  name: user.displayName,
+                  email: user.email,
+                  photo: user.providerData[0].photoURL,
+                },
+                {merge: true},
+              );
           } else {
             await firestore()
               .collection('users')

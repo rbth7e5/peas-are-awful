@@ -34,11 +34,14 @@ export default function Map() {
           await firestore()
             .collection('users')
             .doc(user.uid)
-            .set({
-              borrow: user.borrow + borrow,
-              donate: user.donate + donate,
-              holding: user.holding + holding,
-            });
+            .set(
+              {
+                borrow: user.borrow + borrow,
+                donate: user.donate + donate,
+                holding: user.holding + holding,
+              },
+              {merge: true},
+            );
         }
       };
       Alert.alert(`Hook ${currentHook}`, `${action} your bag now`, [
@@ -56,7 +59,7 @@ export default function Map() {
                 await updateStats({borrow: 0, donate: 1, holding: 0});
                 break;
             }
-            if (actionType === 'donate') {
+            if (actionType === 'donate' && user) {
               await firestore()
                 .collection('feed')
                 .doc()
