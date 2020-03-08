@@ -48,26 +48,40 @@ export default function App() {
   }, [initializing]);
 
   useEffect(() => {
-    if (user && user.uid) {
+    if (
+      user &&
+      user.uid &&
+      user.displayName &&
+      user.email &&
+      user.providerData
+    ) {
       return firestore()
         .collection('users')
-        .onSnapshot(querySnapshot => {
-          const retrievedUserArray = querySnapshot.docs.filter(
-            d => d.id === user.uid,
-          );
+        .onSnapshot(async querySnapshot => {
+          const retrievedUserArray = querySnapshot.docs
+            .filter(d => d.exists && d.id === user.uid)
+            .map(d => d.data());
           if (retrievedUserArray.length > 0) {
-            const data = retrievedUserArray[0]
-              ? retrievedUserArray[0].data()
-              : {};
+            const data = retrievedUserArray[0] ? retrievedUserArray[0] : {};
             setUser({
-              uid: user.uid,
               ...data,
             });
           } else {
-            return firestore()
+            await firestore()
               .collection('users')
               .doc(user.uid)
-              .set({data: {borrow: 0, donate: 0, holding: 0}});
+              .set(
+                {
+                  borrow: 0,
+                  donate: 0,
+                  holding: 0,
+                  uid: user.uid,
+                  name: user.displayName,
+                  email: user.email,
+                  photo: user.providerData[0].photoURL,
+                },
+                {merge: true},
+              );
           }
         });
     }

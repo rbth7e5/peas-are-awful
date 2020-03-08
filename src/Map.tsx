@@ -56,6 +56,16 @@ export default function Map() {
                 await updateStats({borrow: 0, donate: 1, holding: 0});
                 break;
             }
+            if (actionType === 'donate') {
+              await firestore()
+                .collection('feed')
+                .doc()
+                .set({
+                  photo: user.photo,
+                  name: user.name,
+                  subtitle: `${user.name} donated 1 bag to ${kioskData.name}!`,
+                });
+            }
             setPanelOpen(true);
           },
         },

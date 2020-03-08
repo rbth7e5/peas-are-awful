@@ -44,3 +44,46 @@ export const useKioskData = (kioskID: string) => {
   });
   return data;
 };
+
+export const useDonatedRanking = () => {
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    return firestore()
+      .collection('users')
+      .onSnapshot(querySnapshot => {
+        const ranking = querySnapshot.docs
+          .map(doc => doc.data())
+          .sort((a, b) => a.donate - b.donate);
+        setList(ranking);
+      });
+  });
+  return list;
+};
+
+export const useBorrowedRanking = () => {
+  const [list, setList] = useState([]);
+  useEffect(() => {
+    return firestore()
+      .collection('users')
+      .onSnapshot(querySnapshot => {
+        const ranking = querySnapshot.docs
+          .map(doc => doc.data())
+          .sort((a, b) => a.borrow - b.borrow);
+        setList(ranking);
+      });
+  });
+  return list;
+};
+
+export const useFeed = () => {
+  const [feed, setFeed] = useState([]);
+  useEffect(() => {
+    return firestore()
+      .collection('feed')
+      .onSnapshot(querySnapshot => {
+        const feedList = querySnapshot.docs.map(doc => doc.data());
+        setFeed(feedList);
+      });
+  });
+  return feed;
+};
