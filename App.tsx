@@ -14,7 +14,7 @@ import Map from './src/Map';
 import Profile from './src/Profile';
 import Community from './src/Community';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-import {Text, View} from 'react-native';
+import {Image, View} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import firestore from '@react-native-firebase/firestore';
 import {STYLES} from './src/styles';
@@ -106,7 +106,10 @@ export default function App() {
   if (!user) {
     return (
       <View style={STYLES.loginView}>
-        <Text style={{margin: 'auto', fontSize: 17}}>Welcome to Peas!</Text>
+        <Image
+          style={{width: 256, height: 256, resizeMode: 'contain'}}
+          source={require('./assets/logo-full.png')}
+        />
         <GoogleSigninButton
           style={{width: 192, height: 48}}
           onPress={async () => {

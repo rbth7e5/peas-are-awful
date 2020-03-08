@@ -42,12 +42,12 @@ export const STYLES = StyleSheet.create({
   panelLimit: {
     marginTop: 8,
     height: 32,
-    backgroundColor: '#ccc',
+    backgroundColor: '#e6e6e6',
     borderRadius: 8,
   },
   panelProgress: {
     height: 32,
-    backgroundColor: '#fc8753',
+    backgroundColor: '#a6e3ca',
     borderTopLeftRadius: 8,
     borderBottomLeftRadius: 8,
   },
