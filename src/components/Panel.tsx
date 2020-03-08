@@ -6,10 +6,11 @@ import React from 'react';
 interface PanelProps {
   panelOpen: boolean;
   data: any;
+  onScan: () => any;
 }
 
 export default function Panel(props: PanelProps) {
-  const {panelOpen, data} = props;
+  const {panelOpen, data, onScan} = props;
   const slideUp = useSlideUpAnimation(panelOpen, 300, [320, 0]);
   if (data) {
     const ratio = data.bags_avail / data.bags_limit;
@@ -29,7 +30,7 @@ export default function Panel(props: PanelProps) {
                 <Text style={STYLES.panelButtonText}>Get Directions</Text>
               </View>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={onScan}>
               <View style={STYLES.panelButton}>
                 <Text style={STYLES.panelButtonText}>Scan QR Code</Text>
               </View>
