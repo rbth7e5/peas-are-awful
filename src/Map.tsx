@@ -64,7 +64,9 @@ export default function Map() {
   };
   return (
     <>
-      <MapboxGL.MapView style={STYLES.mapView}>
+      <MapboxGL.MapView
+        style={STYLES.mapView}
+        onPress={() => setPanelOpen(false)}>
         <MapboxGL.Camera followUserLocation={true} animationDuration={100} />
         <MapboxGL.UserLocation visible={true} />
         <KioskMarker
