@@ -1,8 +1,7 @@
-import {useSlideUpAnimation} from '../custom-hooks';
+import {useKioskData, useSlideUpAnimation} from '../custom-hooks';
 import {STYLES} from '../styles';
 import {Animated, View, Text, TouchableOpacity} from 'react-native';
-import React, {useEffect, useState} from 'react';
-import firestore from '@react-native-firebase/firestore';
+import React from 'react';
 
 interface PanelProps {
   panelOpen: boolean;
@@ -13,15 +12,7 @@ interface PanelProps {
 export default function Panel(props: PanelProps) {
   const {panelOpen, kioskID, onScan} = props;
   const slideUp = useSlideUpAnimation(panelOpen, 300, [320, 0]);
-  const [data, setData] = useState(null);
-  useEffect(() => {
-    firestore()
-      .collection('kiosks')
-      .doc(kioskID)
-      .onSnapshot(querySnapshot => {
-        setData(querySnapshot.data());
-      });
-  });
+  const data = useKioskData(kioskID);
   if (data) {
     const ratio = data.bags_avail / data.bags_limit;
     return (
@@ -29,7 +20,7 @@ export default function Panel(props: PanelProps) {
         <View style={STYLES.panelWrapper}>
           <Text style={STYLES.panelTitle}>{data.name}</Text>
           <Text style={STYLES.panelSubtitle}>
-            Available Bags ({data.bags_avail})
+            Available Bags ({data.bags_avail}/{data.bags_limit})
           </Text>
           <View style={STYLES.panelLimit}>
             <View style={[STYLES.panelProgress, {width: `${ratio * 100}%`}]} />

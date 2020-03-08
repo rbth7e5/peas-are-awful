@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import {Animated} from 'react-native';
+import firestore from '@react-native-firebase/firestore';
 
 export const useSlideUpAnimation = (
   panelOpen: boolean,
@@ -27,4 +28,19 @@ export const useSlideUpAnimation = (
   }, [animation, duration, panelOpen]); // This effect will only trigger if animation, duration, panelOpen changes
 
   return slideUp;
+};
+
+export const useKioskData = (kioskID: string) => {
+  const [data, setData] = useState(null);
+  useEffect(() => {
+    if (kioskID) {
+      return firestore()
+        .collection('kiosks')
+        .doc(kioskID)
+        .onSnapshot(querySnapshot => {
+          setData(querySnapshot.data());
+        });
+    }
+  });
+  return data;
 };
