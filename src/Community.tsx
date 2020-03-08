@@ -5,8 +5,8 @@ import {useDonatedRanking, useFeed} from './custom-hooks';
 
 export default function Community() {
   const [selectedIndex, setSelectedIndex] = useState(0);
-  const feedList = useFeed();
-  const donatedList = useDonatedRanking();
+  const feedList = useFeed(selectedIndex);
+  const donatedList = useDonatedRanking(selectedIndex);
   const buttonNames = ['Feed', 'Ranking'];
   let list = [];
   if (selectedIndex === 0) {

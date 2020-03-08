@@ -47,7 +47,7 @@ export const useKioskData = (kioskID: string) => {
   return data;
 };
 
-export const useDonatedRanking = () => {
+export const useDonatedRanking = (index: number) => {
   const [list, setList] = useState([]);
   useEffect(() => {
     return firestore()
@@ -60,7 +60,7 @@ export const useDonatedRanking = () => {
           setList(ranking);
         }
       });
-  });
+  }, [index]);
   return list;
 };
 
@@ -79,7 +79,7 @@ export const useBorrowedRanking = () => {
   return list;
 };
 
-export const useFeed = () => {
+export const useFeed = (index: number) => {
   const [feed, setFeed] = useState([]);
   useEffect(() => {
     return firestore()
@@ -88,6 +88,6 @@ export const useFeed = () => {
         const feedList = querySnapshot.docs.map(doc => doc.data());
         setFeed(feedList);
       });
-  });
+  }, [index]);
   return feed;
 };
