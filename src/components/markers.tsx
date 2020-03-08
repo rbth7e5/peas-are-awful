@@ -15,13 +15,15 @@ export const KioskMarker = (props: KioskMarkerProps) => {
     return firestore()
       .collection('kiosks')
       .onSnapshot(querySnapshot => {
-        const docData = querySnapshot.docs.map(doc => {
-          return {
-            id: doc.id,
-            ...doc.data(),
-          };
-        });
-        setKiosks(docData);
+        if (querySnapshot) {
+          const docData = querySnapshot.docs.map(doc => {
+            return {
+              id: doc.id,
+              ...doc.data(),
+            };
+          });
+          setKiosks(docData);
+        }
       });
   });
   const featureCollection = {

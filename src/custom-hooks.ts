@@ -53,7 +53,7 @@ export const useDonatedRanking = () => {
       .onSnapshot(querySnapshot => {
         const ranking = querySnapshot.docs
           .map(doc => doc.data())
-          .sort((a, b) => a.donate - b.donate);
+          .sort((a, b) => b.donate - a.donate);
         setList(ranking);
       });
   });
