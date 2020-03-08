@@ -38,7 +38,9 @@ export const useKioskData = (kioskID: string) => {
         .collection('kiosks')
         .doc(kioskID)
         .onSnapshot(querySnapshot => {
-          setData(querySnapshot.data());
+          if (querySnapshot) {
+            setData(querySnapshot.data());
+          }
         });
     }
   });
@@ -51,10 +53,12 @@ export const useDonatedRanking = () => {
     return firestore()
       .collection('users')
       .onSnapshot(querySnapshot => {
-        const ranking = querySnapshot.docs
-          .map(doc => doc.data())
-          .sort((a, b) => b.donate - a.donate);
-        setList(ranking);
+        if (querySnapshot) {
+          const ranking = querySnapshot.docs
+            .map(doc => doc.data())
+            .sort((a, b) => b.donate - a.donate);
+          setList(ranking);
+        }
       });
   });
   return list;

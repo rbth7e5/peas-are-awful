@@ -53,23 +53,43 @@ export default function Map() {
             switch (actionType) {
               case 'take':
                 await updateStats({borrow: 0, donate: 0, holding: 1});
+                await firestore()
+                  .collection('feed')
+                  .doc()
+                  .set({
+                    photo: user.photo,
+                    name: user.name,
+                    subtitle: `${user.name} borrowed 1 bag from ${
+                      kioskData.name
+                    }!`,
+                  });
                 break;
               case 'return':
                 await updateStats({borrow: 1, donate: 0, holding: -1});
+                await firestore()
+                  .collection('feed')
+                  .doc()
+                  .set({
+                    photo: user.photo,
+                    name: user.name,
+                    subtitle: `${user.name} returned 1 bag to ${
+                      kioskData.name
+                    }!`,
+                  });
                 break;
               case 'donate':
                 await updateStats({borrow: 0, donate: 1, holding: 0});
+                await firestore()
+                  .collection('feed')
+                  .doc()
+                  .set({
+                    photo: user.photo,
+                    name: user.name,
+                    subtitle: `${user.name} donated 1 bag to ${
+                      kioskData.name
+                    }!`,
+                  });
                 break;
-            }
-            if (actionType === 'donate' && user) {
-              await firestore()
-                .collection('feed')
-                .doc()
-                .set({
-                  photo: user.photo,
-                  name: user.name,
-                  subtitle: `${user.name} donated 1 bag to ${kioskData.name}!`,
-                });
             }
             setPanelOpen(true);
           },
