@@ -20,7 +20,10 @@ export default function Community() {
         selectedIndex={selectedIndex}
         onPress={setSelectedIndex}
         buttons={buttonNames}
-        selectedButtonStyle={{backgroundColor: '#a6e3ca'}}
+        containerStyle={{borderRadius: 8, borderWidth: 0}}
+        innerBorderStyle={{width: 0}}
+        buttonStyle={{borderWidth: 0}}
+        selectedButtonStyle={{backgroundColor: '#a6e3ca', borderWidth: 0}}
         selectedTextStyle={{color: '#0d3d3b'}}
         textStyle={{color: '#0d3d3b'}}
       />
