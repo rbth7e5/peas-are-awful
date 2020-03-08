@@ -4,8 +4,13 @@ import React, {useEffect, useState} from 'react';
 import {FeatureCollection} from 'geojson';
 import {MARKER_STYLES} from '../styles';
 
-export const KioskMarker = () => {
+interface KioskMarkerProps {
+  onTap: (data: any) => any;
+}
+
+export const KioskMarker = (props: KioskMarkerProps) => {
   const [kiosks, setKiosks] = useState([]);
+  const {onTap} = props;
   useEffect(() => {
     return firestore()
       .collection('kiosks')
@@ -31,7 +36,8 @@ export const KioskMarker = () => {
     <MapboxGL.ShapeSource
       id="symbolLocationSource"
       hitbox={{width: 5, height: 5}}
-      shape={featureCollection}>
+      shape={featureCollection}
+      onPress={e => onTap(e.nativeEvent.payload.properties)}>
       <MapboxGL.SymbolLayer
         id="symbolLocationSymbols"
         minZoomLevel={1}
